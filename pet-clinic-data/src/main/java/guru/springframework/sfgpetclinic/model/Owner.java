@@ -1,5 +1,7 @@
 package guru.springframework.sfgpetclinic.model;
 
-public class PetType {
+
+
+public class Owner extends Person {
 
 }

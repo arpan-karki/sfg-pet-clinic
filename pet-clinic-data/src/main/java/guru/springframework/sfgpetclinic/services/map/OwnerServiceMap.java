@@ -4,8 +4,9 @@ import java.util.Set;
 
 import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.services.CrudService;
+import guru.springframework.sfgpetclinic.services.OwnerService;
 
-public class OwnerServiceMap extends AbstractMapServices<Owner, Long> implements CrudService<Owner, Long> {
+public class OwnerServiceMap extends AbstractMapServices<Owner, Long> implements OwnerService {
 
 	@Override
 	public Set<Owner> findAll() {
@@ -41,6 +42,12 @@ public class OwnerServiceMap extends AbstractMapServices<Owner, Long> implements
 	public Owner save(Owner obj) {
 		// TODO Auto-generated method stub
 		return this.save(obj.getId(), obj);
+	}
+
+	@Override
+	public Owner findByLastName(String lastName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

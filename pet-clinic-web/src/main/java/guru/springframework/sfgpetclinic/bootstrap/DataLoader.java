@@ -5,8 +5,11 @@ import org.springframework.stereotype.Component;
 
 import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.model.Pet;
+import guru.springframework.sfgpetclinic.model.PetType;
 import guru.springframework.sfgpetclinic.model.Vet;
 import guru.springframework.sfgpetclinic.services.OwnerService;
+import guru.springframework.sfgpetclinic.services.PetService;
+import guru.springframework.sfgpetclinic.services.PetTypeService;
 import guru.springframework.sfgpetclinic.services.VetService;
 import guru.springframework.sfgpetclinic.services.map.OwnerServiceMap;
 import guru.springframework.sfgpetclinic.services.map.VetServiceMap;
@@ -16,10 +19,12 @@ public class DataLoader implements CommandLineRunner {
 
 	private final OwnerService ownerService; 
 	private final VetService vetService;
+	private final PetTypeService petTypeService;
 	
 	
-	public DataLoader(OwnerService ownerService, VetService vetService) {
+	public DataLoader(OwnerService ownerService, VetService vetService,PetTypeService petTypeService) {
 		super();
+		this.petTypeService = petTypeService;
 		this.ownerService = ownerService;
 		this.vetService = vetService;
 	}
@@ -57,6 +62,15 @@ public class DataLoader implements CommandLineRunner {
 		vetService.save(vet2);
 		System.out.println("Loaded Vets ...");
 		vetService.findAll().forEach(vet -> System.out.println(vet)); 
+		
+		PetType dog = new PetType();
+		dog.setName("dog");
+		PetType savedDogType = petTypeService.save(dog);
+		
+		PetType cat = new PetType();
+		dog.setName("cat");
+		PetType savedCatType = petTypeService.save(cat);
+		
 	}
 
 }

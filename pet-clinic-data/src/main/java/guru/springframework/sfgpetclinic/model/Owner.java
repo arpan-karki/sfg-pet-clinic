@@ -1,10 +1,12 @@
 package guru.springframework.sfgpetclinic.model;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Owner extends Person {
 
-	private Set<Pet> pets ;
+	private Set<Pet> pets = new HashSet<>() ;
 	
 	private String address;
 	
@@ -42,6 +44,11 @@ public class Owner extends Person {
 
 	public void setPets(Set<Pet> pets) {
 		this.pets = pets;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "Owner [pets=" + pets + ", address=" + address + ", city=" + city + ", telephone=" + telephone + "]";
 	}
 	
 }

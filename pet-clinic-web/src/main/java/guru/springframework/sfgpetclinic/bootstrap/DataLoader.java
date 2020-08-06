@@ -1,5 +1,7 @@
 package guru.springframework.sfgpetclinic.bootstrap;
 
+import java.time.LocalDate;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -31,16 +33,47 @@ public class DataLoader implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		PetType dog = new PetType();
+		dog.setName("dog");
+		PetType savedDogType = petTypeService.save(dog);
+		
+		PetType cat = new PetType();
+		dog.setName("cat");
+		PetType savedCatType = petTypeService.save(cat);
+		
 		Owner owner1= new Owner();
 		
 		owner1.setFirstName("Arpan");
 		owner1.setLastName("Karki");
+		owner1.setAddress("addr");
+		owner1.setCity("city");
+		owner1.setTelephone("Telephone");
+		
+		Pet arpansPet = new Pet();
+		arpansPet.setPetName("Arpans Pet");
+		arpansPet.setPetType(dog);
+		arpansPet.setOwner(owner1);
+		arpansPet.setBirthDate(LocalDate.now());
+		
+		owner1.getPets().add(arpansPet);
 		
 		Owner owner2= new Owner();
 		
 		owner2.setFirstName("Sam");
 		owner2.setLastName("Witwicky");
+		owner2.setAddress("addr");
+		owner2.setCity("city");
+		owner2.setTelephone("Telephone");
 		
+		
+		Pet samsPet = new Pet();
+		samsPet.setPetName("Sams Pet");
+		samsPet.setPetType(cat);
+		samsPet.setOwner(owner1);
+		samsPet.setBirthDate(LocalDate.now());
+		
+		owner2.getPets().add(samsPet);
 		ownerService.save(owner1);
 		ownerService.save(owner2);
 		
@@ -63,13 +96,9 @@ public class DataLoader implements CommandLineRunner {
 		System.out.println("Loaded Vets ...");
 		vetService.findAll().forEach(vet -> System.out.println(vet)); 
 		
-		PetType dog = new PetType();
-		dog.setName("dog");
-		PetType savedDogType = petTypeService.save(dog);
 		
-		PetType cat = new PetType();
-		dog.setName("cat");
-		PetType savedCatType = petTypeService.save(cat);
+		
+		petTypeService.findAll().forEach(petType -> System.out.println(petType));
 		
 	}
 

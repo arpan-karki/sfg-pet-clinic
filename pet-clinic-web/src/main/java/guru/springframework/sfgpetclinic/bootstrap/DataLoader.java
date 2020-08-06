@@ -8,10 +8,12 @@ import org.springframework.stereotype.Component;
 import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.model.Pet;
 import guru.springframework.sfgpetclinic.model.PetType;
+import guru.springframework.sfgpetclinic.model.Speciality;
 import guru.springframework.sfgpetclinic.model.Vet;
 import guru.springframework.sfgpetclinic.services.OwnerService;
 import guru.springframework.sfgpetclinic.services.PetService;
 import guru.springframework.sfgpetclinic.services.PetTypeService;
+import guru.springframework.sfgpetclinic.services.SpecialityService;
 import guru.springframework.sfgpetclinic.services.VetService;
 import guru.springframework.sfgpetclinic.services.map.OwnerServiceMap;
 import guru.springframework.sfgpetclinic.services.map.VetServiceMap;
@@ -19,13 +21,15 @@ import guru.springframework.sfgpetclinic.services.map.VetServiceMap;
 @Component
 public class DataLoader implements CommandLineRunner {
 
-	private final OwnerService ownerService; 
+	private final OwnerService ownerService;
 	private final VetService vetService;
 	private final PetTypeService petTypeService;
-	
-	
-	public DataLoader(OwnerService ownerService, VetService vetService,PetTypeService petTypeService) {
+	private final SpecialityService specialityService;
+
+	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
+			SpecialityService specialityService) {
 		super();
+		this.specialityService = specialityService;
 		this.petTypeService = petTypeService;
 		this.ownerService = ownerService;
 		this.vetService = vetService;
@@ -33,73 +37,90 @@ public class DataLoader implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		
+
+		int count = petTypeService.findAll().size();
+
+		if (count == 0) {
+			loadData();
+		}
+
+	}
+
+	private void loadData() {
 		PetType dog = new PetType();
 		dog.setName("dog");
 		PetType savedDogType = petTypeService.save(dog);
-		
+
 		PetType cat = new PetType();
 		dog.setName("cat");
 		PetType savedCatType = petTypeService.save(cat);
-		
-		Owner owner1= new Owner();
-		
+
+		Owner owner1 = new Owner();
+
 		owner1.setFirstName("Arpan");
 		owner1.setLastName("Karki");
 		owner1.setAddress("addr");
 		owner1.setCity("city");
 		owner1.setTelephone("Telephone");
-		
+
 		Pet arpansPet = new Pet();
 		arpansPet.setPetName("Arpans Pet");
 		arpansPet.setPetType(dog);
 		arpansPet.setOwner(owner1);
 		arpansPet.setBirthDate(LocalDate.now());
-		
+
 		owner1.getPets().add(arpansPet);
-		
-		Owner owner2= new Owner();
-		
+
+		Owner owner2 = new Owner();
+
 		owner2.setFirstName("Sam");
 		owner2.setLastName("Witwicky");
 		owner2.setAddress("addr");
 		owner2.setCity("city");
 		owner2.setTelephone("Telephone");
-		
-		
+
 		Pet samsPet = new Pet();
 		samsPet.setPetName("Sams Pet");
 		samsPet.setPetType(cat);
 		samsPet.setOwner(owner1);
 		samsPet.setBirthDate(LocalDate.now());
-		
+
 		owner2.getPets().add(samsPet);
 		ownerService.save(owner1);
 		ownerService.save(owner2);
-		
+
 		System.out.println("Loaded Owners ...");
-		ownerService.findAll().forEach(owner -> System.out.println(owner)); 
-		
-		Vet vet1= new Vet();
+		ownerService.findAll().forEach(owner -> System.out.println(owner));
+
+		Speciality radiology = new Speciality();
+		radiology.setDescription("Radiology");
+
+		Speciality dentistry = new Speciality();
+		dentistry.setDescription("Dentistry");
+
+		Speciality surgery = new Speciality();
+		surgery.setDescription("Surgery");
+
+		Speciality savedSurgery = specialityService.save(surgery);
+		Speciality savedDentistry = specialityService.save(dentistry);
+		Speciality savedRadiology = specialityService.save(radiology);
+
+		Vet vet1 = new Vet();
 		vet1.setFirstName("Ram");
 		vet1.setLastName("Bahadur");
-		
-		
-		Vet vet2= new Vet();
+		vet1.getSpecialities().add(savedRadiology);
+
+		Vet vet2 = new Vet();
 		vet2.setFirstName("Sam");
 		vet2.setLastName("Bahadur");
-		
-		
-		
+		vet2.getSpecialities().add(savedDentistry);
+
 		vetService.save(vet1);
 		vetService.save(vet2);
 		System.out.println("Loaded Vets ...");
-		vetService.findAll().forEach(vet -> System.out.println(vet)); 
-		
-		
-		
+		vetService.findAll().forEach(vet -> System.out.println(vet));
+
 		petTypeService.findAll().forEach(petType -> System.out.println(petType));
-		
 	}
 
 }

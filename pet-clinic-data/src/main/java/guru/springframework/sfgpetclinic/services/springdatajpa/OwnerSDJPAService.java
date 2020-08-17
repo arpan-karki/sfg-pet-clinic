@@ -11,6 +11,7 @@ import guru.springframework.sfgpetclinic.repositories.OwnerRepository;
 import guru.springframework.sfgpetclinic.repositories.PetRepository;
 import guru.springframework.sfgpetclinic.repositories.PetTypeRepository;
 import guru.springframework.sfgpetclinic.services.OwnerService;
+
 @Service
 @Profile("springdatajpa")
 public class OwnerSDJPAService implements OwnerService {
@@ -18,7 +19,7 @@ public class OwnerSDJPAService implements OwnerService {
 	private final OwnerRepository ownerRepository;
 	private final PetRepository petRepository;
 	private final PetTypeRepository petTypeRepository;
-		
+
 	public OwnerSDJPAService(OwnerRepository ownerRepository, PetRepository petRepository,
 			PetTypeRepository petTypeRepository) {
 		super();
@@ -56,7 +57,7 @@ public class OwnerSDJPAService implements OwnerService {
 	@Override
 	public void deleteById(Long id) {
 		// TODO Auto-generated method stub
-		ownerRepository.deleteById(id) ;
+		ownerRepository.deleteById(id);
 	}
 
 	@Override

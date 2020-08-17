@@ -10,11 +10,13 @@ import guru.springframework.sfgpetclinic.model.Pet;
 import guru.springframework.sfgpetclinic.model.PetType;
 import guru.springframework.sfgpetclinic.model.Speciality;
 import guru.springframework.sfgpetclinic.model.Vet;
+import guru.springframework.sfgpetclinic.model.Visit;
 import guru.springframework.sfgpetclinic.services.OwnerService;
 import guru.springframework.sfgpetclinic.services.PetService;
 import guru.springframework.sfgpetclinic.services.PetTypeService;
 import guru.springframework.sfgpetclinic.services.SpecialityService;
 import guru.springframework.sfgpetclinic.services.VetService;
+import guru.springframework.sfgpetclinic.services.VisitService;
 import guru.springframework.sfgpetclinic.services.map.OwnerMapService;
 import guru.springframework.sfgpetclinic.services.map.VetMapService;
 
@@ -25,14 +27,16 @@ public class DataLoader implements CommandLineRunner {
 	private final VetService vetService;
 	private final PetTypeService petTypeService;
 	private final SpecialityService specialityService;
+	private final VisitService visitService;
 
 	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
-			SpecialityService specialityService) {
+			SpecialityService specialityService, VisitService visitService) {
 		super();
 		this.specialityService = specialityService;
 		this.petTypeService = petTypeService;
 		this.ownerService = ownerService;
 		this.vetService = vetService;
+		this.visitService = visitService;
 	}
 
 	@Override
@@ -85,9 +89,17 @@ public class DataLoader implements CommandLineRunner {
 		samsPet.setOwner(owner1);
 		samsPet.setBirthDate(LocalDate.now());
 
+		
+		
 		owner2.getPets().add(samsPet);
 		ownerService.save(owner1);
 		ownerService.save(owner2);
+		
+		Visit catVisit = new Visit();
+		catVisit.setDescription("Sneezy Kitty");
+		catVisit.setDate(LocalDate.now());
+		catVisit.setPet(samsPet);
+		visitService.save(catVisit);
 
 		System.out.println("Loaded Owners ...");
 		ownerService.findAll().forEach(owner -> System.out.println(owner));
@@ -118,6 +130,9 @@ public class DataLoader implements CommandLineRunner {
 		vetService.save(vet1);
 		vetService.save(vet2);
 		System.out.println("Loaded Vets ...");
+
+	
+
 		vetService.findAll().forEach(vet -> System.out.println(vet));
 
 		petTypeService.findAll().forEach(petType -> System.out.println(petType));

@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 public class Owner extends Person {
 	
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "owner")
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "owner",fetch = FetchType.EAGER)
 	private Set<Pet> pets = new HashSet<>() ;
 	
 	@Column(name ="address")

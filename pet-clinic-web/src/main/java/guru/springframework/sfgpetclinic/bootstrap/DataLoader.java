@@ -100,6 +100,7 @@ public class DataLoader implements CommandLineRunner {
 		catVisit.setDate(LocalDate.now());
 		catVisit.setPet(samsPet);
 		visitService.save(catVisit);
+		System.out.println("Loaded Visits ...");
 
 		System.out.println("Loaded Owners ...");
 		ownerService.findAll().forEach(owner -> System.out.println(owner));
@@ -131,11 +132,6 @@ public class DataLoader implements CommandLineRunner {
 		vetService.save(vet2);
 		System.out.println("Loaded Vets ...");
 
-	
-
-		vetService.findAll().forEach(vet -> System.out.println(vet));
-
-		petTypeService.findAll().forEach(petType -> System.out.println(petType));
 	}
 
 }

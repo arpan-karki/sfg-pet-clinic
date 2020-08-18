@@ -13,7 +13,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import guru.springframework.sfgpetclinic.model.Owner;
+import guru.springframework.sfgpetclinic.model.Owner.OwnerBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "pets")
 public class Pet extends BaseEntity {
@@ -31,54 +42,8 @@ public class Pet extends BaseEntity {
 
 	@Column(name = "part_name")
 	private String petName;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
 	private Set<Visit> visits = new HashSet<Visit>();
-
-	public String getPetName() {
-		return petName;
-	}
-
-	public Set<Visit> getVisits() {
-		return visits;
-	}
-
-	public void setVisits(Set<Visit> visits) {
-		this.visits = visits;
-	}
-
-	public void setPetName(String petName) {
-		this.petName = petName;
-	}
-
-	public PetType getPetType() {
-		return petType;
-	}
-
-	public void setPetType(PetType petType) {
-		this.petType = petType;
-	}
-
-	public Owner getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Owner owner) {
-		this.owner = owner;
-	}
-
-	public LocalDate getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	@Override
-	public String toString() {
-
-		return "Pet [petType=" + petType + " birthDate=" + birthDate + ", petName=" + petName + "]";
-	}
 
 }

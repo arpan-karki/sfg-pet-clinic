@@ -38,5 +38,15 @@ public class Owner extends Person {
 
 	@Column(name = "telephone")
 	private String telephone;
-
+	
+	@Builder
+	public Owner(Set<Pet> pets, String address, String city, String telephone,String firstName , String lastName, Long id) {
+		super(firstName,lastName,id);
+		this.pets = pets;
+		this.address = address;
+		this.city = city;
+		this.telephone = telephone;
+	}
+	
+	
 }
